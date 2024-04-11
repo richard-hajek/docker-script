@@ -2,7 +2,7 @@
 
 ## Pitch
 
-Dockerfiles are universal scripts, but what if you want use a Dockerfile to generate / build something? This project allows you to!
+Dockerfiles are universal scripts, but what if you just want the build artifact and are not interested in the container? This project enables that workflow!
 
 ## Install
 
