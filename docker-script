@@ -3,10 +3,12 @@
 set -euo pipefail
 
 function help() {
-    echo "Usage: $0 [options]"
+    echo "Usage: $0 [options] -- [docker build options]"
     echo "Use this script to execute a Docker Recipe"
     echo "Options:"
-    echo "  -h, --help      Display this help message"
+    echo "  -h, --help              Display this help message"
+    echo "  [docker build options]  Are passed to docker build"
+
 }
 
 # Parse command line arguments
@@ -15,6 +17,10 @@ while [[ $# -gt 0 ]]; do
         -h|--help)
             help
             exit 0
+            ;;
+        --)
+            shift
+            break;
             ;;
         *)
             echo "Error: Unknown option $1"
@@ -25,7 +31,7 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-docker build . -t docker-script-img
+docker build "$@" . -t docker-script-img
 export_object=$(docker inspect docker-script-img | jq -r '.[0]."Config"."Labels"."docker-script.export"')
 docker run --name docker-script-cont docker-script-img
 docker cp docker-script-cont:$export_object ./
