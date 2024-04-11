@@ -25,4 +25,4 @@ RUN gcc main.c
 LABEL docker-script.export="/root/a.out"
 ```
 
-Running `docker-script` in this directory will build the Dockerfile, the app, and automatically extracts the compiled program!
+Running `docker-script` in this directory will build the Dockerfile, the app, and automatically extracts the compiled program! Which will be available in $PWD/a.out.
