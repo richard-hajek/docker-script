@@ -10,7 +10,7 @@ Clone this repository and copy 'docker-script' to your preferred $PATH.
 
 ## Quickstart
 
-Take any Dockerfile, and add label "docker-script.export" with path to what you want exported from the image, for example
+Take any Dockerfile, and add label `docker-script.export` with path to what you want exported from the image, for example
 
 ```Dockerfile
 FROM ubuntu:latest
