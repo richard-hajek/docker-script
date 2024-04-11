@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function help() {
+    echo "Usage: $0 [options]"
+    echo "Use this script to execute a Docker Recipe"
+    echo "Options:"
+    echo "  -h, --help      Display this help message"
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            help
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option $1"
+            help
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+docker build . -t docker-script-img
+export_object=$(docker inspect docker-script-img | jq -r '.[0]."Config"."Labels"."docker-script.export"')
+docker run --name docker-script-cont docker-script-img
+docker cp docker-script-cont:$export_object ./
+docker rm docker-script-cont
+docker rmi docker-script-img
